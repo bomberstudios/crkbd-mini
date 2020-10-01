@@ -27,10 +27,10 @@ enum macro_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3( \
-  KC_Q,  KC_W,  KC_E,  KC_R,  KC_T,     KC_Y,  KC_U,  KC_I,    KC_O,   KC_P,\
-  CTL_A, ALT_S, CMD_D, SHT_F, KC_G,     KC_H,  SHT_J, CMD_K,   ALT_L,  CTL_CLN,\
-  KC_Z,  KC_X,  KC_C,  KC_V,  KC_B,     KC_N,  KC_M,  KC_COMM, KC_DOT, KC_SLSH,\
-                L_UC,  L_NUM, KC_BSPC,  SPC_3, L_SYM, KC_ENT\
+  TD_ESC,KC_W,  KC_E,  KC_R,  KC_T,     KC_Y,  KC_U,  KC_I,    KC_O,   KC_P,
+  CTL_A, ALT_S, CMD_D, SHT_F, KC_G,     KC_H,  SHT_J, CMD_K,   ALT_L,  CTL_CLN,
+  KC_Z,  KC_X,  KC_C,  KC_V,  KC_B,     KC_N,  KC_M,  KC_COMM, KC_DOT, KC_SLSH,
+                KC_TAB,L_NUM, KC_BSPC,  SPC_3, L_SYM, KC_ENT
   ),
 
   [_COLEMAK] = LAYOUT_split_3x5_3( \
@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NUMBER] = LAYOUT_split_3x5_3( \
     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                 XXXXXXX,  KC_7,  KC_8,  KC_9, XXXXXXX,\
-    CMD_1,   CMD_2,   CMD_3,   CMD_4,   XXXXXXX,               XXXXXXX,  KC_4,  KC_5,  KC_6, XXXXXXX,\
+    CMD_1,   CMD_2,   CMD_3,   CMD_4,   XXXXXXX,               XXXXXXX,  KC_4,  KC_5,  KC_6, KC_SCLN,\
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX,  KC_1,  KC_2,  KC_3, XXXXXXX,\
                                L_UC,    L_NUM, KC_BSPC, SPC_3, KC_0,     KC_ENT \
   ),
@@ -55,9 +55,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_MOVE] = LAYOUT_split_3x5_3( \
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, LINEDEL,                    LINEUP,   START,   KC_UP,     END, ZOOM_IN,\
-       Ctrl,     Alt,     Cmd,   Shift, LINEDUP,                    LINEDWN, KC_LEFT, KC_DOWN,KC_RIGHT,  TD_IOS,\
-       Ctrl,     Alt,     Cmd,   Shift,RUNSCRIPT,                   RUNAGAIN, SHT_SCR, SHT_ARE, SHT_OPT,ZOOM_OUT,\
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, LINEDEL,                    LINEUP,   START,   KC_UP,   END,      ZOOM_IN,\
+       Ctrl,     Alt,     Cmd,   Shift, LINEDUP,                    LINEDWN,  KC_LEFT, KC_DOWN, KC_RIGHT, KC_MPLY,\
+       Ctrl,     Alt,     Cmd,   Shift, RUNSCRIPT,                  RUNAGAIN, SHT_SCR, SHT_ARE, SHT_OPT,  ZOOM_OUT,\
                               L_UC,   L_NUM, KC_BSPC,      SPC_3,   L_SYM, KC_PENT \
   ),
 
@@ -76,12 +76,14 @@ void persistent_default_layer_set(uint16_t default_layer) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case TD_ESC:
     case CTL_A:
     case SPC_3:
       return TAPPING_TERM + 100;
     case SHT_J:
       return TAPPING_TERM - 100;
+    case TD_ESC:
+    case KC_Q:
+      return TAPPING_TERM + 150;
     default:
       return TAPPING_TERM;
   }

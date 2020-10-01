@@ -21,6 +21,6 @@ void ios_media(qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   // Tap once for Escape, twice for Caps Lock
-  [TD_ESC_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_CAPS),
+  [TD_ESC_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_Q, KC_CAPS),
   [TD_IOS_MEDIA] = ACTION_TAP_DANCE_FN(ios_media),
 };
