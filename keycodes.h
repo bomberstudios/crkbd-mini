@@ -7,6 +7,8 @@
 // macOS Shortcuts
 #define COPY  LWIN(KC_C)
 #define PASTE LWIN(KC_V)
+#define CUT LWIN(KC_X)
+#define UNDO LWIN(KC_Z)
 #define SHT_SCR LWIN(LSFT(KC_3))
 #define SHT_ARE LWIN(LSFT(KC_4))
 #define SHT_OPT LWIN(LSFT(KC_5))
@@ -41,7 +43,7 @@
 #define SHT_J MT(MOD_LSFT,KC_J)
 #define CMD_K MT(MOD_LGUI,KC_K)
 #define ALT_L MT(MOD_LALT,KC_L)
-#define CTL_CLN MT(MOD_LCTL,KC_COLON) // hypothesis: I will never need a semicolon. And when I need it, I can use a layer -> Bad luck!. From the docs: "Unfortunately, these keycodes cannot be used in Mod-Taps or Layer-Taps, since any modifiers specified in the keycode are ignored."
+#define CTL_CLN MT(MOD_LCTL,KC_SCLN) // hypothesis: I will never need a semicolon. And when I need it, I can use a layer -> Bad luck!. From the docs: "Unfortunately, these keycodes cannot be used in Mod-Taps or Layer-Taps, since any modifiers specified in the keycode are ignored."
 
 // Home row mods for Colemak
 #define ALT_R MT(MOD_LALT,KC_R)
@@ -75,17 +77,56 @@
 // FN_MO13 - trilayer, layer 1 (3 when held with FN_MO23)
 // FN_MO23 - trilayer, layer 2 (3 when held with FN_MO13)
 
-// Spanish Unicode
-#define UCX_N UC(0xF1) // ñ
-#define UCX_NU UC(0xD1) // Ñ
+enum unicode_names {
+  N_TILDE_LC,
+  N_TILDE_UC,
+  A_ACUTE_LC,
+  A_ACUTE_UC,
+  E_ACUTE_LC,
+  E_ACUTE_UC,
+  I_ACUTE_LC,
+  I_ACUTE_UC,
+  O_ACUTE_LC,
+  O_ACUTE_UC,
+  U_ACUTE_LC,
+  U_ACUTE_UC,
+  U_COLON
+};
 
-#define UCX_A UC(0xE1) // á
-#define UCX_E UC(0xE9) // é
-#define UCX_I UC(0xED) // í
-#define UCX_O UC(0xF3) // ó
-#define UCX_U UC(0xFA) // ú
-#define UCX_AU UC(0xC1) // Á
-#define UCX_EU UC(0xC9) // É
-#define UCX_IU UC(0xCD) // Í
-#define UCX_OU UC(0xD3) // Ó
-#define UCX_UU UC(0xDA) // Ú
+const uint32_t PROGMEM unicode_map[] = {
+  [N_TILDE_LC] = 0xF1,
+  [N_TILDE_UC] = 0xD1,
+  [A_ACUTE_LC] = 0xE1,
+  [A_ACUTE_UC] = 0xC1,
+  [E_ACUTE_LC] = 0xE9,
+  [E_ACUTE_UC] = 0xC9,
+  [I_ACUTE_LC] = 0xED,
+  [I_ACUTE_UC] = 0xCD,
+  [O_ACUTE_LC] = 0xF3,
+  [O_ACUTE_UC] = 0xD3,
+  [U_ACUTE_LC] = 0xFA,
+  [U_ACUTE_UC] = 0xDA,
+  [U_COLON] = 0x3A
+};
+
+// Spanish Unicode
+#define SPA_N XP(N_TILDE_LC,N_TILDE_UC)
+#define SPA_A XP(A_ACUTE_LC,A_ACUTE_UC)
+#define SPA_E XP(E_ACUTE_LC,E_ACUTE_UC)
+#define SPA_I XP(I_ACUTE_LC,I_ACUTE_UC)
+#define SPA_O XP(O_ACUTE_LC,O_ACUTE_UC)
+#define SPA_U XP(U_ACUTE_LC,U_ACUTE_UC)
+
+// #define UCX_N UC(0xF1) // ñ
+// #define UCX_NU UC(0xD1) // Ñ
+//
+// #define UCX_A UC(0xE1) // á
+// #define UCX_E UC(0xE9) // é
+// #define UCX_I UC(0xED) // í
+// #define UCX_O UC(0xF3) // ó
+// #define UCX_U UC(0xFA) // ú
+// #define UCX_AU UC(0xC1) // Á
+// #define UCX_EU UC(0xC9) // É
+// #define UCX_IU UC(0xCD) // Í
+// #define UCX_OU UC(0xD3) // Ó
+// #define UCX_UU UC(0xDA) // Ú
