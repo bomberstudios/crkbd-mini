@@ -43,8 +43,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_COLEMAK] = LAYOUT_split_3x5_3(
     KC_Q,  KC_W,  KC_F,  KC_P,  KC_G,                KC_J,  KC_L, KC_U,    KC_Y,    KC_SCLN,
-    // CTL_A, ALT_R, CMD_S, SHT_T, KC_D,                KC_H,  SHT_N, CMD_E,   ALT_I,   CTL_O,
-    KC_A,  KC_R,  KC_S,  KC_T,  KC_D,                KC_H,  KC_N, KC_E,    KC_I,    KC_O,
+    CTL_A, ALT_R, CMD_S, SHT_T, KC_D,                KC_H,  SHT_N, CMD_E,   ALT_I,   CTL_O,
+    // KC_A,  KC_R,  KC_S,  KC_T,  KC_D,                KC_H,  KC_N, KC_E,    KC_I,    KC_O,
     KC_Z,  KC_X,  KC_C,  KC_V,  KC_B,                KC_K,  KC_M, KC_TRNS, KC_TRNS, KC_TRNS,
                   L_UC,  L_NUM, KC_BSPC,      SPC_3, L_SYM, KC_ENT
   ),
@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case CTL_A:
+    // case CTL_A:
     case SPC_3:
       return TAPPING_TERM + 100;
     // case SHT_J:
@@ -97,6 +97,18 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case TD_QCL:
     case KC_Q:
       return TAPPING_TERM + 50;
+    // Colemak home row mods need a much higher tapping term
+    // while I'm learning, otherwise they won't register
+    // Alternatively, I could enable RETRO TAPPING on Colemak?
+    case CTL_A:
+    case ALT_R:
+    case CMD_S:
+    case SHT_T:
+    case SHT_N:
+    case CMD_E:
+    case ALT_I:
+    case CTL_O:
+      return TAPPING_TERM + 800; // Yes, this is quite extreme
     default:
       return TAPPING_TERM;
   }
