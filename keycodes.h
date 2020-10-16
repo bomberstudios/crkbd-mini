@@ -1,6 +1,6 @@
 #define L_COL TG(_COLEMAK)
-#define L_NUM LT(_NUMBER,KC_ESC)
-#define L_SYM MO(_SYMBOL)
+#define L_NUM LT(_NUMBER,KC_TAB)
+#define L_SYM LT(_SYMBOL,KC_ENT)
 #define L_MOM MO(_MOVE)
 #define L_UC LT(_UNICODE,KC_TAB)
 
@@ -22,10 +22,10 @@
 #define LINEDEL LSFT(LCTL(KC_K))
 
 // Sketch
-#define RUNSCRIPT LSFT(LCTL(KC_K))
-#define RUNAGAIN  LSFT(LCTL(KC_R))
-#define ZOOM_IN   LWIN(KC_PLUS)
-#define ZOOM_OUT  LWIN(KC_MINUS)
+#define SKRUN LSFT(LCTL(KC_K))
+#define SKRUNAG  LSFT(LCTL(KC_R))
+#define ZOOMIN   LWIN(KC_PLUS)
+#define ZOOMOUT  LWIN(KC_MINUS)
 #define ZENMODE   LWIN(KC_DOT)
 
 
