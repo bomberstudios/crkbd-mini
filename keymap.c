@@ -18,15 +18,44 @@ enum custom_keycodes {
   UNICODE,
   QMKBEST,
   QMKURL,
-  MY_OTHER_MACRO
+  M_EMAIL,
 };
 
 #include "keycodes.h"
+
+#ifdef TAP_DANCE_ENABLE
 #include "tap-dance.h"
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    // case CTL_A:
+    // case SPC_3:
+    //   return TAPPING_TERM + 100;
+    // case SHT_J:
+    //   return TAPPING_TERM - 50;
+    case TD_QCL:
+    // case KC_Q:
+      return TAPPING_TERM + 100;
+    // Colemak home row mods need a much higher tapping term
+    // while I'm learning, otherwise they won't register
+    // Alternatively, I could enable RETRO TAPPING on Colemak?
+    // case CTL_A:
+    case ALT_R:
+    case CMD_S:
+    case SHT_T:
+    case SHT_N:
+    case CMD_E:
+    case ALT_I:
+    case CTL_O:
+      return TAPPING_TERM + 800; // Yes, this is quite extreme
+    default:
+      return TAPPING_TERM;
+  }
+}
+#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3(
-    TD_QCL,  KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
     CTL_A,   ALT_S,   CMD_D,   SHT_F,   KC_G,    KC_H,    SHT_J,   CMD_K,   ALT_L,   CTL_CLN,
     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
                       _______, L_NUM,   KC_BSPC, SPC_3,   L_SYM,   _______
@@ -48,16 +77,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYMBOL] = LAYOUT_split_3x5_3( \
     KC_EXLM,   KC_AT, KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,
-    _______, _______, KC_GRV,  KC_QUOT, KC_COLN, KC_BSLS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC,
+    M_EMAIL, _______, KC_GRV,  KC_QUOT, KC_COLN, KC_BSLS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC,
     _______, _______, KC_TILD, KC_DQUO, KC_SCLN, KC_PIPE, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR,
-                      _______, _______, _______, _______, _______, _______
+                      _______, _______, KC_DEL,  _______, _______, _______
   ),
   // TODO: Window Switch and Tab Switch using proper code, assigned to a key here
   [_MOVE] = LAYOUT_split_3x5_3( \
     KC_ESC,  _______, _______, _______, LINEDEL, LINEUP,  START,   KC_UP,   END,     ZOOMIN,
     Ctrl,    Alt,     Cmd,     Shift,   LINEDUP, LINEDWN, KC_LEFT, KC_DOWN, KC_RIGHT,KC_MPLY,
     UNDO,    CUT,     COPY,    PASTE,   SKRUN,   SKRUNAG, SHT_SCR, SHT_ARE, SHT_OPT, ZOOMOUT,
-                      KC_ESC,  _______, _______, _______, _______, _______
+                      _______, KC_ESC,  _______, _______, KC_PENT, _______
   ),
 
   [_UNICODE] = LAYOUT_split_3x5_3( \
@@ -67,33 +96,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                       _______, _______, _______, _______, _______, _______
   )
 };
-
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    // case CTL_A:
-    case SPC_3:
-      return TAPPING_TERM + 100;
-    // case SHT_J:
-    //   return TAPPING_TERM - 50;
-    case TD_QCL:
-    case KC_Q:
-      return TAPPING_TERM + 100;
-    // Colemak home row mods need a much higher tapping term
-    // while I'm learning, otherwise they won't register
-    // Alternatively, I could enable RETRO TAPPING on Colemak?
-    case CTL_A:
-    case ALT_R:
-    case CMD_S:
-    case SHT_T:
-    case SHT_N:
-    case CMD_E:
-    case ALT_I:
-    case CTL_O:
-      return TAPPING_TERM + 800; // Yes, this is quite extreme
-    default:
-      return TAPPING_TERM;
-  }
-}
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -117,11 +119,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         break;
 
-    case MY_OTHER_MACRO:
+    case M_EMAIL:
         if (record->event.pressed) {
-           SEND_STRING(SS_LCTL("ac")); // selects all and copies
+           SEND_STRING("bomberstudios@gmail.com");
         }
         break;
     }
     return true;
 };
+
+#ifdef COMBO_ENABLE
+// remember to update COMBO_COUNT in config.h
+enum combos {
+  COMBO_TAB,
+  COMBO_ESC,
+  COMBO_CAPSLOCK,
+};
+
+const uint16_t PROGMEM combo_tab[] =      {KC_R, KC_T, COMBO_END};
+const uint16_t PROGMEM combo_esc[] =      {KC_Q, CTL_A, COMBO_END}; // we need to merge this PR for this to work: https://github.com/qmk/qmk_firmware/pull/8591/files
+const uint16_t PROGMEM combo_capslock[] = {CTL_A, ALT_S, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+  [COMBO_TAB] = COMBO(combo_tab, KC_TAB),
+  [COMBO_ESC] = COMBO(combo_esc, KC_ESC),
+  [COMBO_CAPSLOCK] = COMBO(combo_capslock, KC_CAPS),
+};
+#endif
