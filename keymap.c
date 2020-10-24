@@ -25,15 +25,16 @@ enum custom_keycodes {
 
 #ifdef TAP_DANCE_ENABLE
 #include "tap-dance.h"
+#endif
+
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    // case CTL_A:
-    // case SPC_3:
-    //   return TAPPING_TERM + 100;
     // case SHT_J:
     //   return TAPPING_TERM - 50;
-    case TD_QCL:
+    case CTL_A:
+    // case TD_QCL:
     // case KC_Q:
+    case SPC_3:
       return TAPPING_TERM + 100;
     // Colemak home row mods need a much higher tapping term
     // while I'm learning, otherwise they won't register
@@ -51,7 +52,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       return TAPPING_TERM;
   }
 }
-#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3(
