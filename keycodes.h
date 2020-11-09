@@ -1,6 +1,6 @@
 #define L_COL TG(_COLEMAK)
-#define L_NUM LT(_NUMBER,KC_TAB)
-#define L_SYM LT(_SYMBOL,KC_ENT)
+#define L_NUM LT(_NUMBER,KC_ENT)
+#define L_SYM LT(_SYMBOL,KC_TAB)
 #define L_MOM MO(_MOVE)
 #define L_UC LT(_UNICODE,KC_TAB)
 
@@ -44,6 +44,7 @@
 #define CMD_K MT(MOD_LGUI,KC_K)
 #define ALT_L MT(MOD_LALT,KC_L)
 #define CTL_CLN MT(MOD_LCTL,KC_SCLN) // hypothesis: I will never need a semicolon. And when I need it, I can use a layer -> Bad luck!. From the docs: "Unfortunately, these keycodes cannot be used in Mod-Taps or Layer-Taps, since any modifiers specified in the keycode are ignored."
+// #define CTL_CLN MT(MOD_LCTL,M_COLON) // Doesnt seem to work...
 
 // Home row mods for Colemak
 #define ALT_R MT(MOD_LALT,KC_R)
