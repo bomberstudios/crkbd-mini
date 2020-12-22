@@ -1,28 +1,5 @@
 #include QMK_KEYBOARD_H
-
-#define _QWERTY    0
-#define _COLEMAK   1
-#define _NUMBER    2
-#define _SYMBOL    3
-#define _MOVE      4
-#define _UNICODE   5
-
-enum custom_keycodes {
-  QWERTY = SAFE_RANGE,
-  COLEMAK,
-  NUMBER,
-  SYMBOL,
-  MOVE,
-  UNICODE,
-  M_EMAIL,
-  M_COLON,
-  CPYPASTE,
-  CMD_TAB,
-  CTL_TAB,
-  RANDOM,
-};
-
-#include "keycodes.h"
+#include "../../../users/bomberstudios/keycodes.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3(
