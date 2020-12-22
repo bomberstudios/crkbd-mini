@@ -16,7 +16,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
                       _______, L_NUM,   KC_BSPC, SPC_3,   L_SYM,   _______
   ),
-  // TODO: Window Switch and Tab Switch using proper code, assigned to a key here
   [_MOVE] = LAYOUT_split_3x5_3( \
     KC_ESC,  L_COL,   CTL_TAB, CMD_TAB, LINEDEL, LINEUP,  START,   KC_UP,   END,     ZOOMIN,
     Ctrl,    Alt,     Cmd,     Shift,   LINEDUP, LINEDWN, KC_LEFT, KC_DOWN, KC_RIGHT,KC_MPLY,
